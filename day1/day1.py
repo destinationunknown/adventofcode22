@@ -1,4 +1,5 @@
-data = open('input.txt', 'r').read().strip().split("\n")
+data = open("input.txt", "r").read().strip().split("\n")
+
 
 def part_one(data: list[str]):
     max_calories = 0
