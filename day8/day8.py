@@ -8,34 +8,26 @@ def part_one(data: list[str]):
     for row in range(len(data)):
         row_max = 0
         for col in range(len(data[row])):
-            if col == 0 or col == len(data[row]) - 1:
-                counted.add((row, col))
-            if grid[row][col] > row_max:
+            if col == 0 or col == len(data[row]) - 1 or grid[row][col] > row_max:
                 counted.add((row, col))
             row_max = max(row_max, grid[row][col])
 
         row_max = 0
         for col in range(len(data[row]) - 1, -1, -1):
-            if col == 0 or col == len(data[row]) - 1:
-                counted.add((row, col))
-            if grid[row][col] > row_max:
+            if col == 0 or col == len(data[row]) - 1 or grid[row][col] > row_max:
                 counted.add((row, col))
             row_max = max(row_max, grid[row][col])
 
     for col in range(len(data[0])):
         col_max = 0
         for row in range(len(data)):
-            if row == 0 or row == len(data) - 1:
-                counted.add((row, col))
-            if grid[row][col] > col_max:
+            if row == 0 or row == len(data) - 1 or grid[row][col] > col_max:
                 counted.add((row, col))
             col_max = max(col_max, grid[row][col])
 
         col_max = 0
         for row in range(len(data) - 1, -1, -1):
-            if row == 0 or row == len(data) - 1:
-                counted.add((row, col))
-            if grid[row][col] > col_max:
+            if row == 0 or row == len(data) - 1 or grid[row][col] > col_max:
                 counted.add((row, col))
             col_max = max(col_max, grid[row][col])
 
