@@ -36,13 +36,11 @@ def part_two(data: list[str]):
     adding = False
     val = 0
 
-    crt_row = 0
-    crt_pos = 0
-
-    print(len(data))
-
     while i < len(data):
         cycle += 1
+
+        crt_row = (cycle - 1) // 40
+        crt_pos = (cycle - 1) % 40
 
         if crt_pos in [x, x - 1, x + 1]:
             grid[crt_row][crt_pos] = "█"
@@ -63,8 +61,12 @@ def part_two(data: list[str]):
             crt_row += 1
             crt_pos = 0
 
+    res = ""
     for row in grid:
-        print(*row, sep="")
+        res += "".join(row)
+        res += "\n"
+
+    return res
 
 
 if __name__ == "__main__":
