@@ -62,12 +62,11 @@ def part_one(data: list[str]):
             if dist(pos, (i, Y_TO_CHECK)) <= d:
                 points.add((i, Y_TO_CHECK))
         return points
-        sensors, beacons = parse_input(data)
-        for s, b in zip(sensors, beacons):
-            print(s, b)
-            p = p.union(get_impossible_pos(s, b))
-        print("got points")
-        return len([x for x in p if x[1] == Y_TO_CHECK])
+
+    sensors, beacons = parse_input(data)
+    for s, b in zip(sensors, beacons):
+        p = p.union(get_impossible_pos(s, b))
+    return len([x for x in p if x[1] == Y_TO_CHECK])
 
 
 def part_two(data: list[str]):
@@ -100,12 +99,11 @@ def part_two(data: list[str]):
                         return n[0] * (ceil + n[1])
 
     for s, b in zip(sensors, beacons):
-        print(s, b)
         r = get_perimeter(s, dist(s, b))
         if r:
             return r
 
 
 if __name__ == "__main__":
-    # print(part_one(data))
+    print(part_one(data))
     print(part_two(data))
