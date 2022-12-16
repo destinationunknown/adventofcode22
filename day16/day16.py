@@ -1,3 +1,4 @@
+from functools import lru_cache
 import sys
 
 sys.setrecursionlimit(100000000)
@@ -18,32 +19,20 @@ def part_one(data: list[str]):
     graph = parse_input(data)
     print(graph)
 
-    def helper(node, time, opened):
-        opened = opened.copy()
-        if time <= 0:
-            # calculate the value of this path
-            pressure = sum([(opened[valve]) * graph[valve][0] for valve in opened])
-            return pressure
+    @lru_cache(maxsize=None)
+    def helper(node, time_left, opened: frozenset):
+        if time_left <= 0:
+            return 0
         else:
-            results = [helper(n, time - 1, opened) for n in graph[node][1]]
+            results = [helper(n, time_left - 1, opened) for n in graph[node][1]]
             if node not in opened and graph[node][0] > 0:
-                opened[node] = time
-                results += [helper(node, time - 1, opened)]
+                val = (time_left - 1) * graph[node][0]
+                _opened = set(opened)
+                _opened.add(node)
+                results += [helper(node, time_left - 2, frozenset(_opened)) + val]
             return max(results)
 
-            # if node not in opened and graph[node][0] > 0:
-            #     time -= 1
-            #     opened[node] = time
-
-            # unexplored = [n for n in graph[node][1] if n not in opened]
-            # if unexplored:
-            #     next_node = max(unexplored, key=lambda x: graph[x][0])
-            #     return helper(next_node, time - 1, opened)
-            # else:
-            # results = [helper(n, time - 1, opened) for n in graph[node][1]]
-            return max(results)
-
-    return helper("AA", 30, {})
+    return helper("AA", 30, frozenset())
 
 
 def part_two(data: list[str]):
