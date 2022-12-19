@@ -1,6 +1,6 @@
 import functools
-import math
 import sys
+from tqdm import tqdm
 
 sys.setrecursionlimit(100000000)
 
@@ -78,6 +78,7 @@ def assess_blueprint(
                 obsidian_r,
                 geode_r + 1,
                 minute + 1,
+                max_time,
                 blueprint,
             )
         )
@@ -98,6 +99,7 @@ def assess_blueprint(
                 obsidian_r + 1,
                 geode_r,
                 minute + 1,
+                max_time,
                 blueprint,
             )
         )
@@ -114,6 +116,7 @@ def assess_blueprint(
                 obsidian_r,
                 geode_r,
                 minute + 1,
+                max_time,
                 blueprint,
             )
         )
@@ -129,6 +132,7 @@ def assess_blueprint(
                 obsidian_r,
                 geode_r,
                 minute + 1,
+                max_time,
                 blueprint,
             )
         )
@@ -144,6 +148,7 @@ def assess_blueprint(
             obsidian_r,
             geode_r,
             minute + 1,
+            max_time,
             blueprint,
         )
     )
@@ -154,17 +159,17 @@ def assess_blueprint(
 def part_one(data: list[str]):
     blueprints = parse_input(data)
     q = 0
-    for i, blueprint in enumerate(blueprints):
-        print(i)
-        q += (i + 1) * assess_blueprint(0, 0, 0, 0, 1, 0, 0, 0, 1, 26, blueprint)
+    for i, blueprint in tqdm(
+        enumerate(blueprints), desc="Running Part 1...", total=len(blueprints)
+    ):
+        q += (i + 1) * assess_blueprint(0, 0, 0, 0, 1, 0, 0, 0, 1, 24, blueprint)
     return q
 
 
 def part_two(data: list[str]):
     blueprints = parse_input(data)
     q = 1
-    for i, blueprint in enumerate(blueprints[:3]):
-        print(i)
+    for blueprint in tqdm(blueprints[:3], desc="Running Part 2..."):
         q *= assess_blueprint(0, 0, 0, 0, 1, 0, 0, 0, 1, 32, blueprint)
     return q
 
