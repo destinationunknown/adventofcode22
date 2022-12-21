@@ -1,5 +1,5 @@
 import operator
-from sympy import solve, sympify
+from sympy import Eq, solve, sympify, Symbol
 
 data = open("input.txt", "r").read().strip().split("\n")
 
@@ -66,7 +66,11 @@ def part_two(data: list[str]) -> int:
         else:
             jobs.append(job)
 
-    print(vals["root"])
+    lhs, rhs = vals["root"].split("=")
+    lhs = sympify(lhs[1:])
+    rhs = sympify(rhs[:-1])
+    eq = Eq(lhs, rhs)
+    return solve(eq, Symbol("x"))[0]
 
 
 if __name__ == "__main__":
